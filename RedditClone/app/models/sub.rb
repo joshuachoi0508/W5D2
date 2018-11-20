@@ -17,7 +17,17 @@ class Sub < ApplicationRecord
     foreign_key: :user_id,
     class_name: "User"
     
-  has_many :subscribers,
-    foreign_key: :user_id,
-    class_name: "User"
+  # has_many :subscribers,
+  #   foreign_key: :user_id,
+  #   class_name: "User"
+    
+  has_many :post_subs,
+    foreign_key: :sub_id,
+    class_name: "PostSub",
+    dependent: :destroy
+    
+  has_many :posts, 
+    through: :post_subs,
+    source: :post,
+    dependent: :destroy # not sure if works
 end

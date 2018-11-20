@@ -21,11 +21,16 @@ class PostsController < ApplicationController
   def edit
     @post = Post.find(params[:id])
     
-    if @post.author == current_user
-      render :edit
+    if @post
+      if @post.author == current_user
+        render :edit
+      else
+        flash[:errors] = ["Only the author may edit the post"]
+        redirect_to post_url(@post)
+      end
     else
-      flash[:errors] = ["Only the author may edit the post"]
-      render :show
+      flash.now[:errors] = ["Invalid Post ID"]
+      render :edit
     end
   end
   
@@ -43,12 +48,17 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find(params[:id])
     
-    if @post.author == current_user
-      @post.destroy
-      redirect_to sub_url(@post.sub)
+    if @post
+      if @post.author == current_user
+        @post.destroy
+        redirect_to sub_url(@post.sub)
+      else
+        flash[:errors] = @post.errors.full_messages
+        redirect_to post_url(@post)
+      end
     else
-      flash[:errors] = @post.errors.full_messages
-      redirect_to post_url(@post)
+      flash.now[:errors] = ["Invalid Post ID"]
+      redirect_to subs_url
     end
   end
   
