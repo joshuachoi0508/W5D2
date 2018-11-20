@@ -1,7 +1,7 @@
 class SubsController < ApplicationController
-  before_action :require_login
   
   def new
+    require_login
     @sub = Sub.new
     render :new
   end
@@ -18,6 +18,7 @@ class SubsController < ApplicationController
   end
   
   def edit
+    require_login
     @sub = Sub.find(params[:id])
     
     if current_user == @sub.moderator
