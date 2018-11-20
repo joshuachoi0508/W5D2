@@ -1,0 +1,20 @@
+/* PHASE 1: Header */
+body {
+  font-family: 'Roboto Slab', serif;
+}
+
+header {
+  display: flex;
+  width: 100%;
+}
+
+nav {
+  display: flex;
+}
+
+.redheader {
+  display: flex;
+  width: 80%;
+  align-items: center;
+  justify-content: space-between;
+}
